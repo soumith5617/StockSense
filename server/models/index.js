@@ -7,6 +7,7 @@ const receiptModel = require("./receiptModel");
 const deliveryModel = require("./deliveryModel");
 const transferModel = require("./transferModel");
 const adjustmentModel = require("./adjustmentModel");
+const stockLedgerModel = require("./stockLedgerModel");
 
 module.exports = {
     productModel,
@@ -17,5 +18,6 @@ module.exports = {
     receiptModel,
     deliveryModel,
     transferModel,
-    adjustmentModel
+    adjustmentModel,
+    stockLedgerModel
 };

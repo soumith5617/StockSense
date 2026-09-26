@@ -15,6 +15,9 @@ import Products from '../pages/products/Products';
 import Warehouses from '../pages/warehouses/Warehouses';
 import Locations from '../pages/locations/Locations';
 import Receipts from '../pages/receipts/Receipts';
+import Deliveries from '../pages/deliveries/Deliveries';
+import Transfers from '../pages/transfers/Transfers';
+import Adjustments from '../pages/adjustments/Adjustments';
 import PlaceholderPage from '../pages/PlaceholderPage';
 
 export const AppRoutes = () => {
@@ -38,38 +41,11 @@ export const AppRoutes = () => {
           
           <Route path="/operations/receipts" element={<Receipts />} />
 
-          <Route
-            path="/operations/deliveries"
-            element={
-              <PlaceholderPage
-                title="Outgoing Stock Deliveries"
-                moduleCode="DELIVERIES"
-                description="Prepare, pick, pack, and validate stock leaving the facility for customers."
-              />
-            }
-          />
+          <Route path="/operations/deliveries" element={<Deliveries />} />
 
-          <Route
-            path="/operations/transfers"
-            element={
-              <PlaceholderPage
-                title="Internal Stock Transfers"
-                moduleCode="TRANSFERS"
-                description="Move inventory atomically between internal warehouse locations and bins."
-              />
-            }
-          />
+          <Route path="/operations/transfers" element={<Transfers />} />
 
-          <Route
-            path="/operations/adjustments"
-            element={
-              <PlaceholderPage
-                title="Inventory Stock Adjustments"
-                moduleCode="ADJUSTMENTS"
-                description="Conduct physical cycle counts and reconcile database balances with physical reality."
-              />
-            }
-          />
+          <Route path="/operations/adjustments" element={<Adjustments />} />
 
           <Route path="/warehouses" element={<Warehouses />} />
           <Route path="/locations" element={<Locations />} />

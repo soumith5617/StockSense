@@ -416,7 +416,7 @@ async function runTests() {
         // 27. Insufficient-stock attempt creates no ledger
         console.log("\nStep 27: Insufficient-stock attempt creates no ledger");
         const [ledgerExcessCheck] = await pool.query(
-            "SELECT * FROM stock_ledger WHERE reference_id = ?",
+            "SELECT * FROM stock_ledger WHERE reference_id = ? AND movement_type = 'delivery'",
             [excessDelId]
         );
         assert(
@@ -471,7 +471,7 @@ async function runTests() {
         // 31. Rollback leaves ledger unchanged
         console.log("\nStep 31: Rollback leaves ledger unchanged");
         const [ledgerRollbackCheck] = await pool.query(
-            "SELECT * FROM stock_ledger WHERE reference_id = ?",
+            "SELECT * FROM stock_ledger WHERE reference_id = ? AND movement_type = 'delivery'",
             [rollbackDelId]
         );
         assert(
@@ -484,7 +484,7 @@ async function runTests() {
         console.log("\nStep 32: Temporary test data cleanup");
         const allTestDeliveryIds = [del1Id, cancelDelId, excessDelId, rollbackDelId];
 
-        await pool.query("DELETE FROM stock_ledger WHERE reference_id IN (?)", [allTestDeliveryIds]);
+        await pool.query("DELETE FROM stock_ledger WHERE reference_id IN (?) AND movement_type = 'delivery'", [allTestDeliveryIds]);
         await pool.query("DELETE FROM delivery_items WHERE delivery_id IN (?)", [allTestDeliveryIds]);
         await pool.query("DELETE FROM deliveries WHERE id IN (?)", [allTestDeliveryIds]);
         await pool.query("DELETE FROM stock WHERE location_id = ?", [testLocId]);

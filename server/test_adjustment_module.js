@@ -559,7 +559,7 @@ async function runTests() {
         // 37. Rollback leaves ledger unchanged
         console.log("\nStep 37: Rollback leaves ledger unchanged");
         const [ledgerRollbackCheck] = await pool.query(
-            "SELECT * FROM stock_ledger WHERE reference_id = ?",
+            "SELECT * FROM stock_ledger WHERE reference_id = ? AND movement_type = 'adjustment'",
             [rollbackAdjId]
         );
         assert(
@@ -584,7 +584,7 @@ async function runTests() {
         console.log("\nStep 39: Temporary test data cleanup");
         const allTestAdjustmentIds = [adj1Id, cancelAdjId, posAdjId, zeroAdjId, staleAdjId, rollbackAdjId];
 
-        await pool.query("DELETE FROM stock_ledger WHERE reference_id IN (?)", [allTestAdjustmentIds]);
+        await pool.query("DELETE FROM stock_ledger WHERE reference_id IN (?) AND movement_type = 'adjustment'", [allTestAdjustmentIds]);
         await pool.query("DELETE FROM adjustment_items WHERE adjustment_id IN (?)", [allTestAdjustmentIds]);
         await pool.query("DELETE FROM adjustments WHERE id IN (?)", [allTestAdjustmentIds]);
         await pool.query("DELETE FROM stock WHERE location_id = ?", [testLocId]);
