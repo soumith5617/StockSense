@@ -169,7 +169,7 @@ export const MoveHistory = () => {
 
   const hasActiveFilters = !!(search || movementType || productId || locationId || startDate || endDate);
 
-  const totalPages = pagination ? Math.ceil(pagination.total / PAGE_SIZE) : 1;
+  const totalPages = pagination?.totalPages || 1;
 
   return (
     <div className="move-history-page">

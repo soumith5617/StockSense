@@ -8,9 +8,15 @@ const ledgerService = {
   getLedgerEntries: async (params = {}) => {
     const response = await api.get('/stock-ledger', { params });
     const res = response.data;
+    // Backend returns: { success, data: [], total, page, pageSize, totalPages }
     return {
-      entries: res.data?.entries || res.data || [],
-      pagination: res.data?.pagination || res.pagination || null
+      entries: res.data || [],
+      pagination: {
+        total: res.total || 0,
+        page: res.page || 1,
+        pageSize: res.pageSize || 25,
+        totalPages: res.totalPages || 1
+      }
     };
   },
 
