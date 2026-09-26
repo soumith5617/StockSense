@@ -18,7 +18,9 @@ import Receipts from '../pages/receipts/Receipts';
 import Deliveries from '../pages/deliveries/Deliveries';
 import Transfers from '../pages/transfers/Transfers';
 import Adjustments from '../pages/adjustments/Adjustments';
-import PlaceholderPage from '../pages/PlaceholderPage';
+import MoveHistory from '../pages/history/MoveHistory';
+import Profile from '../pages/profile/Profile';
+import Settings from '../pages/settings/Settings';
 
 export const AppRoutes = () => {
   return (
@@ -38,39 +40,18 @@ export const AppRoutes = () => {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
-          
+
           <Route path="/operations/receipts" element={<Receipts />} />
-
           <Route path="/operations/deliveries" element={<Deliveries />} />
-
           <Route path="/operations/transfers" element={<Transfers />} />
-
           <Route path="/operations/adjustments" element={<Adjustments />} />
+          <Route path="/operations/history" element={<MoveHistory />} />
 
           <Route path="/warehouses" element={<Warehouses />} />
           <Route path="/locations" element={<Locations />} />
 
-          <Route
-            path="/settings"
-            element={
-              <PlaceholderPage
-                title="System Settings & Audit Log"
-                moduleCode="SETTINGS"
-                description="Manage organization preferences, user roles, security tokens, and ledger audit exports."
-              />
-            }
-          />
-
-          <Route
-            path="/profile"
-            element={
-              <PlaceholderPage
-                title="My Profile"
-                moduleCode="PROFILE"
-                description="View user role credentials and update personal contact preferences."
-              />
-            }
-          />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
 

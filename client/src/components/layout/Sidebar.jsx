@@ -1,7 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export const Sidebar = ({ isOpen, onClose }) => {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+    if (onClose) onClose();
+  };
+
   return (
     <>
       {isOpen && <div className="sidebar-backdrop" onClick={onClose} />}
@@ -14,10 +24,11 @@ export const Sidebar = ({ isOpen, onClose }) => {
             </svg>
             <span>StockSense</span>
           </div>
-          <span className="sidebar-brand-badge">SaaS</span>
+          <span className="sidebar-brand-badge">ERP</span>
         </div>
 
         <nav className="sidebar-nav">
+          {/* Dashboard */}
           <NavLink
             to="/dashboard"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
@@ -32,6 +43,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             <span>Dashboard</span>
           </NavLink>
 
+          {/* Products */}
           <NavLink
             to="/products"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
@@ -43,6 +55,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             <span>Products</span>
           </NavLink>
 
+          {/* Operations Section */}
           <div className="nav-section-title">Operations</div>
 
           <NavLink
@@ -64,7 +77,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
-            <span>Outgoing Deliveries</span>
+            <span>Delivery Orders</span>
           </NavLink>
 
           <NavLink
@@ -97,6 +110,18 @@ export const Sidebar = ({ isOpen, onClose }) => {
             <span>Stock Adjustments</span>
           </NavLink>
 
+          <NavLink
+            to="/operations/history"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            onClick={onClose}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            <span>Move History</span>
+          </NavLink>
+
+          {/* Warehouse Section */}
           <div className="nav-section-title">Warehouse</div>
 
           <NavLink
@@ -122,6 +147,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
             <span>Locations</span>
           </NavLink>
 
+          {/* System Section */}
           <div className="nav-section-title">System</div>
 
           <NavLink
@@ -135,7 +161,57 @@ export const Sidebar = ({ isOpen, onClose }) => {
             </svg>
             <span>Settings</span>
           </NavLink>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            onClick={onClose}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span>My Profile</span>
+          </NavLink>
         </nav>
+
+        {/* User Footer */}
+        {user && (
+          <div className="sidebar-footer">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: 0 }}>
+              <div style={{
+                width: '32px', height: '32px', borderRadius: '50%',
+                backgroundColor: 'var(--primary)', color: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '13px', fontWeight: 700, flexShrink: 0
+              }}>
+                {user.name ? user.name.charAt(0).toUpperCase() : '?'}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {user.name}
+                </div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {user.role}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'var(--text-muted)', padding: '4px', borderRadius: '4px',
+                display: 'flex', alignItems: 'center'
+              }}
+              aria-label="Sign out"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </button>
+          </div>
+        )}
       </aside>
     </>
   );

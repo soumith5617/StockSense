@@ -11,6 +11,7 @@ const deliveryRoutes = require("./deliveryRoutes");
 const transferRoutes = require("./transferRoutes");
 const adjustmentRoutes = require("./adjustmentRoutes");
 const stockLedgerRoutes = require("./stockLedgerRoutes");
+const dashboardRoutes = require("./dashboardRoutes");
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use("/deliveries", deliveryRoutes);
 router.use("/transfers", transferRoutes);
 router.use("/adjustments", adjustmentRoutes);
 router.use("/stock-ledger", stockLedgerRoutes);
+router.use("/dashboard", dashboardRoutes);
 
 module.exports = router;
